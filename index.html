@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Web Apps | ywa.app</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="mesh-background">
+        <div class="mesh-canvas"></div>
+    </div>
+
+    <div id="zoomWrapper">
+        
+        <aside class="sidebar">
+            <div class="brand">
+                <img id="sidebarLogo" src="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/hUjqV40.png" alt="Your Web Apps" class="brand-image" draggable="false" style="max-width: 100%; height: auto; display: block; opacity: 0.92;">
+            </div>
+            
+            <nav class="side-nav" id="sidebarNav">
+                <div class="nav-label">Ecosystem</div>
+                <a href="#" class="nav-item active" data-filter="all" data-title="All Applications"><span class="icon">💻</span> All Applications</a>
+                <a href="#" class="nav-item" data-filter="browser" data-title="Browser Clones"><span class="icon">🌐</span> Browser Clones</a>
+                <a href="#" class="nav-item" data-filter="editor" data-title="Text Editors"><span class="icon">📝</span> Text Editors</a>
+                <a href="#" class="nav-item" data-filter="graphics" data-title="Graphics & Media"><span class="icon">🎨</span> Graphics & Media</a>
+                <a href="#" class="nav-item" data-filter="publishing" data-title="Publishing"><span class="icon">🖨️</span> Publishing</a>
+                
+                <div class="nav-label">External</div>
+                <a href="https://github.com/rmellis?tab=repositories" target="_blank" class="nav-item external"><span class="icon">🐙</span> GitHub Repos</a>
+                <a href="https://codepen.io/Mikey-Ellis" target="_blank" class="nav-item external"><span class="icon">🖊️</span> CodePens</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="donation-block">
+                    <p class="donation-text">These WebApps are completely<br>free and contain no ads.<br>Any donations to help keep the<br>project alive are hugely appreciated!</p>
+                    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=ltait95@yahoo.co.uk&item_name=Support+Your+Web+Apps" target="_blank" class="btn-donate" title="Donate via PayPal">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        Support the Project
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                
+                <div class="topbar-intro">
+                    <h2 id="greeting" style="font-size: 1rem; font-weight: 500; line-height: 1.5; color: var(--text-muted); opacity: 0.85; transform: translateY(-6px);">Choose hosted or self-hosted deployment, embed easily via iframes, install as standalone apps, and fully customize the source code. Or just use them here</h2>
+                </div>
+
+                <div class="top-controls">
+                    
+                    <div class="zoom-controls">
+                        <button id="zoomOutBtn" title="Zoom Dashboard Out">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        </button>
+                        <span id="zoomLevelDisplay" title="Reset Dashboard Zoom">100%</span>
+                        <button id="zoomInBtn" title="Zoom Dashboard In">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        </button>
+                    </div>
+
+                    <div class="search-container">
+                        <span class="search-icon">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        </span>
+                        <input type="text" id="searchInput" placeholder="Search 11 applications (Press '/' to focus)...">
+                    </div>
+
+                    <button id="themeToggle" class="theme-btn" title="Toggle Theme">
+                        <svg id="moonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                        <svg id="sunIcon" class="hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    </button>
+                </div>
+            </header>
+
+            <div class="content-padding">
+                
+                <section class="hero-section">
+                    <div class="hero-glow"></div>
+                    <div class="hero-content">
+                        
+                        <div class="hero-text">
+                            <span class="badge">Featured Project</span>
+                            <h1 class="hero-title">
+                                <img src="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/IHlwr0B.png" alt="OP Logo" class="hero-icon">
+                                Open Publisher
+                            </h1>
+                            <p class="hero-desc">A powerful, lightweight desktop publishing tool running entirely in your browser. Featuring a classic, familiar ribbon interface, you can effortlessly design multi-page flyers, brochures, and documents. Equipped with WordArt, image editing, 60+ fonts, and customizable templates—all exportable directly to high-quality PDF.</p>
+                            
+                            <div class="hero-actions">
+                                <div class="hero-actions-row">
+                                    <a href="https://openpublisher.app" class="btn-primary launch-modal-btn">Launch Environment &rarr;</a>
+                                    
+                                    <a href="https://github.com/rmellis/open-publisher" target="_blank" class="btn-secondary" title="GitHub Repository">
+                                        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                                        GitHub
+                                    </a>
+                                    
+                                    <a href="https://github.com/rmellis/open-publisher" target="_blank" class="btn-secondary" title="Download Desktop App (Win/Mac/Linux)">
+                                        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                        Desktop App
+                                    </a>
+                                </div>
+
+                                <div class="hero-actions-row">
+                                    <a href="https://codepen.io/rmellis/pen/bNexPwL" target="_blank" class="btn-secondary" title="View Source on CodePen">
+                                        <svg viewBox="0 0 512 512" width="14" height="14" fill="currentColor"><path d="M502.285 159.704l-234-156c-7.987-5.325-18.583-5.325-26.57 0l-234 156C3.014 162.836 0 168.469 0 174.66v162.68c0 6.191 3.014 11.824 7.715 14.956l234 156c3.994 2.663 8.639 3.994 13.285 3.994s9.291-1.331 13.285-3.994l234-156c4.701-3.132 7.715-8.765 7.715-14.956V174.66c0-6.191-3.014-11.824-7.715-14.956zM256 41.666L433.006 159.67 363.31 206.13 256 134.587 148.69 206.13l-69.696-46.46L256 41.666zM46.16 200.74l63.076 42.05-63.076 42.05V200.74zm209.84 269.594L78.994 352.33l69.696-46.46L256 377.413l107.31-71.543 69.696 46.46L256 470.334zm83.234-162.587L256 256.204l-83.234 51.543V204.253L256 255.796l83.234-51.543v103.494zM465.84 284.84l-63.076-42.05 63.076-42.05v84.1z"/></svg>
+                                        CodePen
+                                    </a>
+
+                                    <div class="code-snippet hero-inline-snippet">
+                                        <code>&lt;iframe src="https://openpublisher.app" width="100%" height="600px"&gt;&lt;/iframe&gt;</code>
+                                        <button class="btn-copy with-text" onclick="copySnippet('&lt;iframe src=\'https://openpublisher.app\' width=\'100%\' height=\'600px\' frameborder=\'0\' allowfullscreen&gt;&lt;/iframe&gt;', this)" title="Copy Iframe Embed">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2-2v1"></path></svg>
+                                            <span class="copy-text-span">Copy</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hero-visual">
+                            <div class="hero-browser-frame">
+                                <div class="hero-browser-header">
+                                    <span></span><span></span><span></span>
+                                </div>
+                                <img src="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/UIVzCFq.png" alt="Open Publisher Preview" class="hero-image">
+                                <a href="https://openpublisher.app" class="hero-image-link launch-modal-btn"></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <div class="section-header">
+                    <h3 id="categoryTitle">All Applications</h3>
+                    <span class="app-count">11 Apps</span>
+                </div>
+
+                <div class="app-grid" id="appGrid">
+                    
+                    <article class="app-card" data-category="editor" data-tags="gedit linux editor text clone code" data-icon="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/2GCgEVI.png">
+                        <div class="card-image-wrapper">
+                            <img src="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/nvcIiqu.png" alt="Gedit Clone" class="card-image" loading="lazy">
+                            <div class="card-overlay"><a href="https://gedit.ywa.app" class="btn-glass launch-modal-btn">Open WebApp</a></div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-header">
+                                <div><h3 class="card-title">Gedit Clone</h3><span class="deploy-time">Deployed recently</span></div>
+                                <span class="status-pill">Live</span>
+                            </div>
+                            <p class="card-desc">A web-based recreation of the classic GNOME text editor for Linux.</p>
+                            <div class="distribution-row">
+                                <span class="dist-label">Links</span>
+                                <div class="dist-icons">
+                                    <a href="https://github.com/rmellis/gedit-WebClone" target="_blank" class="dist-btn" title="GitHub Repository">
+                                        <span>GitHub</span>
+                                        <svg viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+                                    </a>
+                                    <a href="https://codepen.io/rmellis/pen/WbGvVYK" target="_blank" class="dist-btn" title="View Source on CodePen">
+                                        <span>CodePen</span>
+                                        <svg viewBox="0 0 512 512"><path d="M502.285 159.704l-234-156c-7.987-5.325-18.583-5.325-26.57 0l-234 156C3.014 162.836 0 168.469 0 174.66v162.68c0 6.191 3.014 11.824 7.715 14.956l234 156c3.994 2.663 8.639 3.994 13.285 3.994s9.291-1.331 13.285-3.994l234-156c4.701-3.132 7.715-8.765 7.715-14.956V174.66c0-6.191-3.014-11.824-7.715-14.956zM256 41.666L433.006 159.67 363.31 206.13 256 134.587 148.69 206.13l-69.696-46.46L256 41.666zM46.16 200.74l63.076 42.05-63.076 42.05V200.74zm209.84 269.594L78.994 352.33l69.696-46.46L256 377.413l107.31-71.543 69.696 46.46L256 470.334zm83.234-162.587L256 256.204l-83.234 51.543V204.253L256 255.796l83.234-51.543v103.494zM465.84 284.84l-63.076-42.05 63.076-42.05v84.1z"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="embed-block">
+                                <span class="dist-label">Embed Iframe</span>
+                                <div class="code-snippet">
+                                    <code>&lt;iframe src="https://gedit.ywa.app" width="100%" height="600px"&gt;&lt;/iframe&gt;</code>
+                                    <button class="btn-copy" onclick="copySnippet('&lt;iframe src=\'https://gedit.ywa.app\' width=\'100%\' height=\'600px\' frameborder=\'0\' allowfullscreen&gt;&lt;/iframe&gt;', this)" title="Copy to clipboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2-2v1"></path></svg></button>
+                                </div>
+                            </div>
+                            <div class="card-footer"><span class="domain-tag">gedit.ywa.app</span></div>
+                        </div>
+                    </article>
+
+                    <article class="app-card" data-category="editor" data-tags="notepad++ editor text clone code windows" data-icon="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/YRmQM2Q.png">
+                        <div class="card-image-wrapper">
+                            <img src="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/8VPwNBU.png" alt="Notepad++" class="card-image" loading="lazy">
+                            <div class="card-overlay"><a href="https://notepad-plus-plus.ywa.app" class="btn-glass launch-modal-btn">Open WebApp</a></div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-header">
+                                <div><h3 class="card-title">Notepad++</h3><span class="deploy-time">Deployed recently</span></div>
+                                <span class="status-pill">Live</span>
+                            </div>
+                            <p class="card-desc">Functional browser-based clone of the classic text editor. Write, edit, and save code natively.</p>
+                            <div class="distribution-row">
+                                <span class="dist-label">Links</span>
+                                <div class="dist-icons">
+                                    <a href="https://github.com/rmellis/NotepadPlusPlus-WebClone" target="_blank" class="dist-btn" title="GitHub Repository">
+                                        <span>GitHub</span>
+                                        <svg viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+                                    </a>
+                                    <a href="https://github.com/rmellis/NotepadPlusPlus-WebClone/releases" target="_blank" class="dist-btn" title="Windows Download">
+                                        <span>Windows</span>
+                                        <svg viewBox="0 0 448 512"><path d="M0 93.7l183.6-25.3v177.4H0V93.7zm0 324.6l183.6 25.3V268.4H0v149.9zm203.8 28L448 480V268.4H203.8v177.9zm0-380.6v180.1H448V32L203.8 65.7z"/></svg>
+                                    </a>
+                                    <a href="https://codepen.io/rmellis/pen/GgqVQpR" target="_blank" class="dist-btn" title="View Source on CodePen">
+                                        <span>CodePen</span>
+                                        <svg viewBox="0 0 512 512"><path d="M502.285 159.704l-234-156c-7.987-5.325-18.583-5.325-26.57 0l-234 156C3.014 162.836 0 168.469 0 174.66v162.68c0 6.191 3.014 11.824 7.715 14.956l234 156c3.994 2.663 8.639 3.994 13.285 3.994s9.291-1.331 13.285-3.994l234-156c4.701-3.132 7.715-8.765 7.715-14.956V174.66c0-6.191-3.014-11.824-7.715-14.956zM256 41.666L433.006 159.67 363.31 206.13 256 134.587 148.69 206.13l-69.696-46.46L256 41.666zM46.16 200.74l63.076 42.05-63.076 42.05V200.74zm209.84 269.594L78.994 352.33l69.696-46.46L256 377.413l107.31-71.543 69.696 46.46L256 470.334zm83.234-162.587L256 256.204l-83.234 51.543V204.253L256 255.796l83.234-51.543v103.494zM465.84 284.84l-63.076-42.05 63.076-42.05v84.1z"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="embed-block">
+                                <span class="dist-label">Embed Iframe</span>
+                                <div class="code-snippet">
+                                    <code>&lt;iframe src="https://notepad-plus-plus.ywa.app" width="100%" height="600px"&gt;&lt;/iframe&gt;</code>
+                                    <button class="btn-copy" onclick="copySnippet('&lt;iframe src=\'https://notepad-plus-plus.ywa.app\' width=\'100%\' height=\'600px\' frameborder=\'0\' allowfullscreen&gt;&lt;/iframe&gt;', this)" title="Copy to clipboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2-2v1"></path></svg></button>
+                                </div>
+                            </div>
+                            <div class="card-footer"><span class="domain-tag">notepad-plus-plus.ywa.app</span></div>
+                        </div>
+                    </article>
+
+                    <article class="app-card" data-category="graphics" data-tags="paint microsoft clone drawing image light" data-icon="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/2QIJ2GV.png">
+                        <div class="card-image-wrapper">
+                            <img src="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/E6zUkbG.png" alt="MS Paint Light" class="card-image" loading="lazy">
+                            <div class="card-overlay"><a href="https://paint.ywa.app" class="btn-glass launch-modal-btn">Open WebApp</a></div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-header">
+                                <div><h3 class="card-title">MS Paint (Light)</h3><span class="deploy-time">Deployed recently</span></div>
+                                <span class="status-pill">Live</span>
+                            </div>
+                            <p class="card-desc">A faithful recreation of Microsoft Paint with a light mode default UI.</p>
+                            <div class="distribution-row">
+                                <span class="dist-label">Links</span>
+                                <div class="dist-icons">
+                                    <a href="https://github.com/rmellis/MSPaint-WebApp-Clone-light" target="_blank" class="dist-btn" title="GitHub Repository">
+                                        <span>GitHub</span>
+                                        <svg viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+                                    </a>
+                                    <a href="https://codepen.io/rmellis/pen/YPWMgRR" target="_blank" class="dist-btn" title="View Source on CodePen">
+                                        <span>CodePen</span>
+                                        <svg viewBox="0 0 512 512"><path d="M502.285 159.704l-234-156c-7.987-5.325-18.583-5.325-26.57 0l-234 156C3.014 162.836 0 168.469 0 174.66v162.68c0 6.191 3.014 11.824 7.715 14.956l234 156c3.994 2.663 8.639 3.994 13.285 3.994s9.291-1.331 13.285-3.994l234-156c4.701-3.132 7.715-8.765 7.715-14.956V174.66c0-6.191-3.014-11.824-7.715-14.956zM256 41.666L433.006 159.67 363.31 206.13 256 134.587 148.69 206.13l-69.696-46.46L256 41.666zM46.16 200.74l63.076 42.05-63.076 42.05V200.74zm209.84 269.594L78.994 352.33l69.696-46.46L256 377.413l107.31-71.543 69.696 46.46L256 470.334zm83.234-162.587L256 256.204l-83.234 51.543V204.253L256 255.796l83.234-51.543v103.494zM465.84 284.84l-63.076-42.05 63.076-42.05v84.1z"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="embed-block">
+                                <span class="dist-label">Embed Iframe</span>
+                                <div class="code-snippet">
+                                    <code>&lt;iframe src="https://paint.ywa.app" width="100%" height="600px"&gt;&lt;/iframe&gt;</code>
+                                    <button class="btn-copy" onclick="copySnippet('&lt;iframe src=\'https://paint.ywa.app\' width=\'100%\' height=\'600px\' frameborder=\'0\' allowfullscreen&gt;&lt;/iframe&gt;', this)" title="Copy to clipboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2-2v1"></path></svg></button>
+                                </div>
+                            </div>
+                            <div class="card-footer"><span class="domain-tag">paint.ywa.app</span></div>
+                        </div>
+                    </article>
+
+                    <article class="app-card" data-category="graphics" data-tags="paint microsoft clone drawing image dark" data-icon="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/2QIJ2GV.png">
+                        <div class="card-image-wrapper">
+                            <img src="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/KNzI7PD.png" alt="MS Paint Dark" class="card-image" loading="lazy">
+                            <div class="card-overlay"><a href="https://paint-dark.ywa.app" class="btn-glass launch-modal-btn">Open WebApp</a></div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-header">
+                                <div><h3 class="card-title">MS Paint (Dark)</h3><span class="deploy-time">Deployed recently</span></div>
+                                <span class="status-pill">Live</span>
+                            </div>
+                            <p class="card-desc">Microsoft Paint clone enhanced with a sleek dark mode default theme.</p>
+                            <div class="distribution-row">
+                                <span class="dist-label">Links</span>
+                                <div class="dist-icons">
+                                    <a href="https://github.com/rmellis/MSPaint-WebApp-Clone-light" target="_blank" class="dist-btn" title="GitHub Repository">
+                                        <span>GitHub</span>
+                                        <svg viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+                                    </a>
+                                    <a href="https://codepen.io/rmellis/pen/WbxWmzb" target="_blank" class="dist-btn" title="View Source on CodePen">
+                                        <span>CodePen</span>
+                                        <svg viewBox="0 0 512 512"><path d="M502.285 159.704l-234-156c-7.987-5.325-18.583-5.325-26.57 0l-234 156C3.014 162.836 0 168.469 0 174.66v162.68c0 6.191 3.014 11.824 7.715 14.956l234 156c3.994 2.663 8.639 3.994 13.285 3.994s9.291-1.331 13.285-3.994l234-156c4.701-3.132 7.715-8.765 7.715-14.956V174.66c0-6.191-3.014-11.824-7.715-14.956zM256 41.666L433.006 159.67 363.31 206.13 256 134.587 148.69 206.13l-69.696-46.46L256 41.666zM46.16 200.74l63.076 42.05-63.076 42.05V200.74zm209.84 269.594L78.994 352.33l69.696-46.46L256 377.413l107.31-71.543 69.696 46.46L256 470.334zm83.234-162.587L256 256.204l-83.234 51.543V204.253L256 255.796l83.234-51.543v103.494zM465.84 284.84l-63.076-42.05 63.076-42.05v84.1z"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="embed-block">
+                                <span class="dist-label">Embed Iframe</span>
+                                <div class="code-snippet">
+                                    <code>&lt;iframe src="https://paint-dark.ywa.app" width="100%" height="600px"&gt;&lt;/iframe&gt;</code>
+                                    <button class="btn-copy" onclick="copySnippet('&lt;iframe src=\'https://paint-dark.ywa.app\' width=\'100%\' height=\'600px\' frameborder=\'0\' allowfullscreen&gt;&lt;/iframe&gt;', this)" title="Copy to clipboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2-2v1"></path></svg></button>
+                                </div>
+                            </div>
+                            <div class="card-footer"><span class="domain-tag">paint-dark.ywa.app</span></div>
+                        </div>
+                    </article>
+
+                    <article class="app-card" data-category="browser" data-tags="internet explorer ie browser clone proxy" data-icon="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/QuyVuEb.png">
+                        <div class="card-image-wrapper">
+                            <img src="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/qZCO2os.png" alt="IE Clone" class="card-image" loading="lazy">
+                            <div class="card-overlay"><a href="https://ie.ywa.app" class="btn-glass launch-modal-btn">Open WebApp</a></div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-header">
+                                <div><h3 class="card-title">Internet Explorer</h3><span class="deploy-time">Deployed recently</span></div>
+                                <span class="status-pill">Live</span>
+                            </div>
+                            <p class="card-desc">Retro Internet Explorer clone functioning as a proxy iframe browser.</p>
+                            <div class="distribution-row">
+                                <span class="dist-label">Links</span>
+                                <div class="dist-icons">
+                                    <a href="https://github.com/rmellis/InternetExplorer-Proxy-WebClone" target="_blank" class="dist-btn" title="GitHub Repository">
+                                        <span>GitHub</span>
+                                        <svg viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+                                    </a>
+                                    <a href="https://codepen.io/rmellis/pen/raLEzem" target="_blank" class="dist-btn" title="View Source on CodePen">
+                                        <span>CodePen</span>
+                                        <svg viewBox="0 0 512 512"><path d="M502.285 159.704l-234-156c-7.987-5.325-18.583-5.325-26.57 0l-234 156C3.014 162.836 0 168.469 0 174.66v162.68c0 6.191 3.014 11.824 7.715 14.956l234 156c3.994 2.663 8.639 3.994 13.285 3.994s9.291-1.331 13.285-3.994l234-156c4.701-3.132 7.715-8.765 7.715-14.956V174.66c0-6.191-3.014-11.824-7.715-14.956zM256 41.666L433.006 159.67 363.31 206.13 256 134.587 148.69 206.13l-69.696-46.46L256 41.666zM46.16 200.74l63.076 42.05-63.076 42.05V200.74zm209.84 269.594L78.994 352.33l69.696-46.46L256 377.413l107.31-71.543 69.696 46.46L256 470.334zm83.234-162.587L256 256.204l-83.234 51.543V204.253L256 255.796l83.234-51.543v103.494zM465.84 284.84l-63.076-42.05 63.076-42.05v84.1z"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="embed-block">
+                                <span class="dist-label">Embed Iframe</span>
+                                <div class="code-snippet">
+                                    <code>&lt;iframe src="https://ie.ywa.app" width="100%" height="600px"&gt;&lt;/iframe&gt;</code>
+                                    <button class="btn-copy" onclick="copySnippet('&lt;iframe src=\'https://ie.ywa.app\' width=\'100%\' height=\'600px\' frameborder=\'0\' allowfullscreen&gt;&lt;/iframe&gt;', this)" title="Copy to clipboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2-2v1"></path></svg></button>
+                                </div>
+                            </div>
+                            <div class="card-footer"><span class="domain-tag">ie.ywa.app</span></div>
+                        </div>
+                    </article>
+
+                    <article class="app-card" data-category="browser" data-tags="opera gx gaming browser clone proxy" data-icon="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/Yfq2LLA.png">
+                        <div class="card-image-wrapper">
+                            <img src="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/LQ1LfNf.png" alt="Opera GX" class="card-image" loading="lazy">
+                            <div class="card-overlay"><a href="https://opera-gx.ywa.app" class="btn-glass launch-modal-btn">Open WebApp</a></div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-header">
+                                <div><h3 class="card-title">Opera GX</h3><span class="deploy-time">Deployed recently</span></div>
+                                <span class="status-pill">Live</span>
+                            </div>
+                            <p class="card-desc">Functional proxy iframe browser themed like the popular Opera GX gaming browser.</p>
+                            <div class="distribution-row">
+                                <span class="dist-label">Links</span>
+                                <div class="dist-icons">
+                                    <a href="https://github.com/rmellis/Opera-GX-Proxy-WebClone" target="_blank" class="dist-btn" title="GitHub Repository">
+                                        <span>GitHub</span>
+                                        <svg viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+                                    </a>
+                                    <a href="https://codepen.io/rmellis/pen/yyJrZZm" target="_blank" class="dist-btn" title="View Source on CodePen">
+                                        <span>CodePen</span>
+                                        <svg viewBox="0 0 512 512"><path d="M502.285 159.704l-234-156c-7.987-5.325-18.583-5.325-26.57 0l-234 156C3.014 162.836 0 168.469 0 174.66v162.68c0 6.191 3.014 11.824 7.715 14.956l234 156c3.994 2.663 8.639 3.994 13.285 3.994s9.291-1.331 13.285-3.994l234-156c4.701-3.132 7.715-8.765 7.715-14.956V174.66c0-6.191-3.014-11.824-7.715-14.956zM256 41.666L433.006 159.67 363.31 206.13 256 134.587 148.69 206.13l-69.696-46.46L256 41.666zM46.16 200.74l63.076 42.05-63.076 42.05V200.74zm209.84 269.594L78.994 352.33l69.696-46.46L256 377.413l107.31-71.543 69.696 46.46L256 470.334zm83.234-162.587L256 256.204l-83.234 51.543V204.253L256 255.796l83.234-51.543v103.494zM465.84 284.84l-63.076-42.05 63.076-42.05v84.1z"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="embed-block">
+                                <span class="dist-label">Embed Iframe</span>
+                                <div class="code-snippet">
+                                    <code>&lt;iframe src="https://opera-gx.ywa.app" width="100%" height="600px"&gt;&lt;/iframe&gt;</code>
+                                    <button class="btn-copy" onclick="copySnippet('&lt;iframe src=\'https://opera-gx.ywa.app\' width=\'100%\' height=\'600px\' frameborder=\'0\' allowfullscreen&gt;&lt;/iframe&gt;', this)" title="Copy to clipboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2-2v1"></path></svg></button>
+                                </div>
+                            </div>
+                            <div class="card-footer"><span class="domain-tag">opera-gx.ywa.app</span></div>
+                        </div>
+                    </article>
+
+                    <article class="app-card" data-category="browser" data-tags="opera browser clone proxy" data-icon="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/S9EEVVz.png">
+                        <div class="card-image-wrapper">
+                            <img src="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/ISwVC1q.png" alt="Opera Clone" class="card-image" loading="lazy">
+                            <div class="card-overlay"><a href="https://opera.ywa.app" class="btn-glass launch-modal-btn">Open WebApp</a></div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-header">
+                                <div><h3 class="card-title">Opera</h3><span class="deploy-time">Deployed recently</span></div>
+                                <span class="status-pill">Live</span>
+                            </div>
+                            <p class="card-desc">Functional proxy iframe browser themed like the standard Opera browser.</p>
+                            <div class="distribution-row">
+                                <span class="dist-label">Links</span>
+                                <div class="dist-icons">
+                                    <a href="https://github.com/rmellis/Opera-Proxy-WebClone" target="_blank" class="dist-btn" title="GitHub Repository">
+                                        <span>GitHub</span>
+                                        <svg viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+                                    </a>
+                                    <a href="https://codepen.io/rmellis/pen/vEKMQoM" target="_blank" class="dist-btn" title="View Source on CodePen">
+                                        <span>CodePen</span>
+                                        <svg viewBox="0 0 512 512"><path d="M502.285 159.704l-234-156c-7.987-5.325-18.583-5.325-26.57 0l-234 156C3.014 162.836 0 168.469 0 174.66v162.68c0 6.191 3.014 11.824 7.715 14.956l234 156c3.994 2.663 8.639 3.994 13.285 3.994s9.291-1.331 13.285-3.994l234-156c4.701-3.132 7.715-8.765 7.715-14.956V174.66c0-6.191-3.014-11.824-7.715-14.956zM256 41.666L433.006 159.67 363.31 206.13 256 134.587 148.69 206.13l-69.696-46.46L256 41.666zM46.16 200.74l63.076 42.05-63.076 42.05V200.74zm209.84 269.594L78.994 352.33l69.696-46.46L256 377.413l107.31-71.543 69.696 46.46L256 470.334zm83.234-162.587L256 256.204l-83.234 51.543V204.253L256 255.796l83.234-51.543v103.494zM465.84 284.84l-63.076-42.05 63.076-42.05v84.1z"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="embed-block">
+                                <span class="dist-label">Embed Iframe</span>
+                                <div class="code-snippet">
+                                    <code>&lt;iframe src="https://opera.ywa.app" width="100%" height="600px"&gt;&lt;/iframe&gt;</code>
+                                    <button class="btn-copy" onclick="copySnippet('&lt;iframe src=\'https://opera.ywa.app\' width=\'100%\' height=\'600px\' frameborder=\'0\' allowfullscreen&gt;&lt;/iframe&gt;', this)" title="Copy to clipboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2-2v1"></path></svg></button>
+                                </div>
+                            </div>
+                            <div class="card-footer"><span class="domain-tag">opera.ywa.app</span></div>
+                        </div>
+                    </article>
+
+                    <article class="app-card" data-category="browser" data-tags="safari apple macos browser clone proxy" data-icon="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/k9VKDVZ.png">
+                        <div class="card-image-wrapper">
+                            <img src="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/9OmBQRF.png" alt="Safari Clone" class="card-image" loading="lazy">
+                            <div class="card-overlay"><a href="https://safari.ywa.app" class="btn-glass launch-modal-btn">Open WebApp</a></div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-header">
+                                <div><h3 class="card-title">Safari</h3><span class="deploy-time">Deployed recently</span></div>
+                                <span class="status-pill">Live</span>
+                            </div>
+                            <p class="card-desc">A functional proxy browser offering a pixel-perfect recreation of macOS Safari.</p>
+                            <div class="distribution-row">
+                                <span class="dist-label">Links</span>
+                                <div class="dist-icons">
+                                    <a href="https://github.com/rmellis/Safari-Proxy-WebClone" target="_blank" class="dist-btn" title="GitHub Repository">
+                                        <span>GitHub</span>
+                                        <svg viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+                                    </a>
+                                    <a href="https://codepen.io/rmellis/pen/dPXLgmN" target="_blank" class="dist-btn" title="View Source on CodePen">
+                                        <span>CodePen</span>
+                                        <svg viewBox="0 0 512 512"><path d="M502.285 159.704l-234-156c-7.987-5.325-18.583-5.325-26.57 0l-234 156C3.014 162.836 0 168.469 0 174.66v162.68c0 6.191 3.014 11.824 7.715 14.956l234 156c3.994 2.663 8.639 3.994 13.285 3.994s9.291-1.331 13.285-3.994l234-156c4.701-3.132 7.715-8.765 7.715-14.956V174.66c0-6.191-3.014-11.824-7.715-14.956zM256 41.666L433.006 159.67 363.31 206.13 256 134.587 148.69 206.13l-69.696-46.46L256 41.666zM46.16 200.74l63.076 42.05-63.076 42.05V200.74zm209.84 269.594L78.994 352.33l69.696-46.46L256 377.413l107.31-71.543 69.696 46.46L256 470.334zm83.234-162.587L256 256.204l-83.234 51.543V204.253L256 255.796l83.234-51.543v103.494zM465.84 284.84l-63.076-42.05 63.076-42.05v84.1z"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="embed-block">
+                                <span class="dist-label">Embed Iframe</span>
+                                <div class="code-snippet">
+                                    <code>&lt;iframe src="https://safari.ywa.app" width="100%" height="600px"&gt;&lt;/iframe&gt;</code>
+                                    <button class="btn-copy" onclick="copySnippet('&lt;iframe src=\'https://safari.ywa.app\' width=\'100%\' height=\'600px\' frameborder=\'0\' allowfullscreen&gt;&lt;/iframe&gt;', this)" title="Copy to clipboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2-2v1"></path></svg></button>
+                                </div>
+                            </div>
+                            <div class="card-footer"><span class="domain-tag">safari.ywa.app</span></div>
+                        </div>
+                    </article>
+
+                    <article class="app-card" data-category="browser" data-tags="chrome google browser clone proxy" data-icon="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/0jJH2Oa.png">
+                        <div class="card-image-wrapper">
+                            <img src="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/ApSPb7O.png" alt="Google Chrome" class="card-image" loading="lazy">
+                            <div class="card-overlay"><a href="https://chrome.ywa.app" class="btn-glass launch-modal-btn">Open WebApp</a></div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-header">
+                                <div><h3 class="card-title">Google Chrome</h3><span class="deploy-time">Deployed recently</span></div>
+                                <span class="status-pill">Live</span>
+                            </div>
+                            <p class="card-desc">A functional proxy iframe browser recreating the classic Google Chrome UI.</p>
+                            <div class="distribution-row">
+                                <span class="dist-label">Links</span>
+                                <div class="dist-icons">
+                                    <a href="https://github.com/rmellis/Chrome-Proxy-WebClone" target="_blank" class="dist-btn" title="GitHub Repository">
+                                        <span>GitHub</span>
+                                        <svg viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+                                    </a>
+                                    <a href="https://codepen.io/rmellis/pen/raLbqMg" target="_blank" class="dist-btn" title="View Source on CodePen">
+                                        <span>CodePen</span>
+                                        <svg viewBox="0 0 512 512"><path d="M502.285 159.704l-234-156c-7.987-5.325-18.583-5.325-26.57 0l-234 156C3.014 162.836 0 168.469 0 174.66v162.68c0 6.191 3.014 11.824 7.715 14.956l234 156c3.994 2.663 8.639 3.994 13.285 3.994s9.291-1.331 13.285-3.994l234-156c4.701-3.132 7.715-8.765 7.715-14.956V174.66c0-6.191-3.014-11.824-7.715-14.956zM256 41.666L433.006 159.67 363.31 206.13 256 134.587 148.69 206.13l-69.696-46.46L256 41.666zM46.16 200.74l63.076 42.05-63.076 42.05V200.74zm209.84 269.594L78.994 352.33l69.696-46.46L256 377.413l107.31-71.543 69.696 46.46L256 470.334zm83.234-162.587L256 256.204l-83.234 51.543V204.253L256 255.796l83.234-51.543v103.494zM465.84 284.84l-63.076-42.05 63.076-42.05v84.1z"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="embed-block">
+                                <span class="dist-label">Embed Iframe</span>
+                                <div class="code-snippet">
+                                    <code>&lt;iframe src="https://chrome.ywa.app" width="100%" height="600px"&gt;&lt;/iframe&gt;</code>
+                                    <button class="btn-copy" onclick="copySnippet('&lt;iframe src=\'https://chrome.ywa.app\' width=\'100%\' height=\'600px\' frameborder=\'0\' allowfullscreen&gt;&lt;/iframe&gt;', this)" title="Copy to clipboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2-2v1"></path></svg></button>
+                                </div>
+                            </div>
+                            <div class="card-footer"><span class="domain-tag">chrome.ywa.app</span></div>
+                        </div>
+                    </article>
+
+                    <article class="app-card" data-category="browser" data-tags="firefox mozilla browser clone proxy" data-icon="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/ou76yZF.png">
+                        <div class="card-image-wrapper">
+                            <img src="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/rl2BJae.png" alt="Firefox Clone" class="card-image" loading="lazy">
+                            <div class="card-overlay"><a href="https://firefox.ywa.app" class="btn-glass launch-modal-btn">Open WebApp</a></div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-header">
+                                <div><h3 class="card-title">Firefox</h3><span class="deploy-time">Deployed recently</span></div>
+                                <span class="status-pill">Live</span>
+                            </div>
+                            <p class="card-desc">Functional proxy browser styled after the modern Mozilla Firefox interface.</p>
+                            <div class="distribution-row">
+                                <span class="dist-label">Links</span>
+                                <div class="dist-icons">
+                                    <a href="https://github.com/rmellis/Firefox-Proxy-WebClone" target="_blank" class="dist-btn" title="GitHub Repository">
+                                        <span>GitHub</span>
+                                        <svg viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+                                    </a>
+                                    <a href="https://codepen.io/rmellis/pen/emzoPpX" target="_blank" class="dist-btn" title="View Source on CodePen">
+                                        <span>CodePen</span>
+                                        <svg viewBox="0 0 512 512"><path d="M502.285 159.704l-234-156c-7.987-5.325-18.583-5.325-26.57 0l-234 156C3.014 162.836 0 168.469 0 174.66v162.68c0 6.191 3.014 11.824 7.715 14.956l234 156c3.994 2.663 8.639 3.994 13.285 3.994s9.291-1.331 13.285-3.994l234-156c4.701-3.132 7.715-8.765 7.715-14.956V174.66c0-6.191-3.014-11.824-7.715-14.956zM256 41.666L433.006 159.67 363.31 206.13 256 134.587 148.69 206.13l-69.696-46.46L256 41.666zM46.16 200.74l63.076 42.05-63.076 42.05V200.74zm209.84 269.594L78.994 352.33l69.696-46.46L256 377.413l107.31-71.543 69.696 46.46L256 470.334zm83.234-162.587L256 256.204l-83.234 51.543V204.253L256 255.796l83.234-51.543v103.494zM465.84 284.84l-63.076-42.05 63.076-42.05v84.1z"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="embed-block">
+                                <span class="dist-label">Embed Iframe</span>
+                                <div class="code-snippet">
+                                    <code>&lt;iframe src="https://firefox.ywa.app" width="100%" height="600px"&gt;&lt;/iframe&gt;</code>
+                                    <button class="btn-copy" onclick="copySnippet('&lt;iframe src=\'https://firefox.ywa.app\' width=\'100%\' height=\'600px\' frameborder=\'0\' allowfullscreen&gt;&lt;/iframe&gt;', this)" title="Copy to clipboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2-2v1"></path></svg></button>
+                                </div>
+                            </div>
+                            <div class="card-footer"><span class="domain-tag">firefox.ywa.app</span></div>
+                        </div>
+                    </article>
+
+                    <article class="app-card" data-category="publishing" data-tags="publisher desktop publish print web alternative" data-icon="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/IHlwr0B.png">
+                        <div class="card-image-wrapper">
+                            <img src="https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/UIVzCFq.png" alt="Open Publisher" class="card-image" loading="lazy">
+                            <div class="card-overlay"><a href="https://openpublisher.app" class="btn-glass launch-modal-btn">Open WebApp</a></div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-header">
+                                <div><h3 class="card-title">Open Publisher</h3><span class="deploy-time">Deployed recently</span></div>
+                                <span class="status-pill">Live</span>
+                            </div>
+                            <p class="card-desc">Advanced desktop-grade publishing layout engine running natively in your browser. A free MS Publisher alternative.</p>
+                            <div class="distribution-row">
+                                <span class="dist-label">Links</span>
+                                <div class="dist-icons">
+                                    <a href="https://github.com/rmellis/open-publisher" target="_blank" class="dist-btn" title="GitHub Repository">
+                                        <span>GitHub</span>
+                                        <svg viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+                                    </a>
+                                    <a href="https://github.com/rmellis/open-publisher/releases" target="_blank" class="dist-btn" title="Windows Download">
+                                        <span>Windows</span>
+                                        <svg viewBox="0 0 448 512"><path d="M0 93.7l183.6-25.3v177.4H0V93.7zm0 324.6l183.6 25.3V268.4H0v149.9zm203.8 28L448 480V268.4H203.8v177.9zm0-380.6v180.1H448V32L203.8 65.7z"/></svg>
+                                    </a>
+                                    <a href="https://codepen.io/rmellis/pen/bNexPwL" target="_blank" class="dist-btn" title="View Source on CodePen">
+                                        <span>CodePen</span>
+                                        <svg viewBox="0 0 512 512"><path d="M502.285 159.704l-234-156c-7.987-5.325-18.583-5.325-26.57 0l-234 156C3.014 162.836 0 168.469 0 174.66v162.68c0 6.191 3.014 11.824 7.715 14.956l234 156c3.994 2.663 8.639 3.994 13.285 3.994s9.291-1.331 13.285-3.994l234-156c4.701-3.132 7.715-8.765 7.715-14.956V174.66c0-6.191-3.014-11.824-7.715-14.956zM256 41.666L433.006 159.67 363.31 206.13 256 134.587 148.69 206.13l-69.696-46.46L256 41.666zM46.16 200.74l63.076 42.05-63.076 42.05V200.74zm209.84 269.594L78.994 352.33l69.696-46.46L256 377.413l107.31-71.543 69.696 46.46L256 470.334zm83.234-162.587L256 256.204l-83.234 51.543V204.253L256 255.796l83.234-51.543v103.494zM465.84 284.84l-63.076-42.05 63.076-42.05v84.1z"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="embed-block">
+                                <span class="dist-label">Embed Iframe</span>
+                                <div class="code-snippet">
+                                    <code>&lt;iframe src="https://openpublisher.app" width="100%" height="600px"&gt;&lt;/iframe&gt;</code>
+                                    <button class="btn-copy" onclick="copySnippet('&lt;iframe src=\'https://openpublisher.app\' width=\'100%\' height=\'600px\' frameborder=\'0\' allowfullscreen&gt;&lt;/iframe&gt;', this)" title="Copy Iframe Embed">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2-2v1"></path></svg>
+                                        <span class="copy-text-span">Copy</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-footer"><span class="domain-tag">openpublisher.app</span></div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </main>
+    </div> <div id="windowContainer"></div>
+
+    <div id="osDock" class="os-dock hidden"></div>
+
+    <template id="windowTemplate">
+        <div class="os-window">
+            <div class="macos-header" title="Drag to move">
+                <div class="macos-traffic-lights">
+                    <button class="traffic-light close" title="Close">
+                        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                    <button class="traffic-light minimize" title="Minimize to Dock">
+                        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </button>
+                    <button class="traffic-light maximize" title="Maximize">
+                        <svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline></svg>
+                    </button>
+                </div>
+                
+                <h3 class="macos-title">WebApp</h3>
+                
+                <div class="modal-top-right-actions">
+                    <div class="window-zoom-controls" title="Window Zoom">
+                        <span class="w-zoom-label">Zoom</span>
+                        <button class="w-zoom-out"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+                        <span class="w-zoom-display">100%</span>
+                        <button class="w-zoom-in"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+                    </div>
+
+                    <button class="btn-modal-action with-text copy-embed-btn" title="Copy Iframe Embed">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2-2v1"></path></svg>
+                        <span class="copy-text-span">Copy Iframe</span>
+                    </button>
+                    
+                    <a href="#" target="_blank" class="btn-modal-action new-tab-btn" title="Open in New Tab">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="modal-body">
+                <iframe src="" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </template>
+
+    <script src="script.js"></script>
+</body>
+</html>
