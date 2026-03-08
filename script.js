@@ -227,6 +227,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function openAppWindow(appName, targetUrl, appIcon, cardRect) {
         if(!windowTemplate || !windowContainer) return;
 
+        const isFirefox = navigator.userAgent.toLowerCase().includes('firefox');
+        const isOpenPublisher = appName.trim().toLowerCase() === 'open publisher';
+
         const winFragment = windowTemplate.content.cloneNode(true);
         const win = winFragment.querySelector('.os-window');
         
@@ -257,6 +260,19 @@ document.addEventListener('DOMContentLoaded', () => {
             startY = (cardRect.top + (cardRect.height / 2)) * currentZoom - (targetHeight / 2);
         }
 
+        // --- BROWSER DETECTION & AUTO-MAXIMIZE LOGIC ---
+        let isMaximized = false;
+        let preMaxTargetX = targetLeft;
+        let preMaxTargetY = targetTop;
+
+        // Force Chrome/Edge to load Open Publisher perfectly Maximized to prevent heavy layout lag
+        if (isOpenPublisher && !isFirefox) {
+            isMaximized = true;
+            startX = targetLeft; 
+            startY = targetTop;
+            win.classList.add('maximized');
+        }
+
         win.style.width = targetWidth + 'px';
         win.style.height = targetHeight + 'px';
         windowContainer.appendChild(win);
@@ -276,13 +292,22 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const iframe = win.querySelector('iframe');
             
-            iframe.style.width = `${100 / winZoom}%`;
-            iframe.style.height = `${100 / winZoom}%`;
-            iframe.style.minWidth = `${100 / winZoom}%`;
-            iframe.style.minHeight = `${100 / winZoom}%`;
-            
-            iframe.style.transform = `scale(${winZoom})`;
-            iframe.style.transformOrigin = 'top left';
+            // FIREFOX FIX: Prevent Firefox from adding white borders or clipping Open Publisher when zoomed
+            if (isOpenPublisher && isFirefox) {
+                iframe.style.width = `100%`;
+                iframe.style.height = `100%`;
+                iframe.style.minWidth = `100%`;
+                iframe.style.minHeight = `100%`;
+                iframe.style.transform = `none`;
+            } else {
+                iframe.style.width = `${100 / winZoom}%`;
+                iframe.style.height = `${100 / winZoom}%`;
+                iframe.style.minWidth = `${100 / winZoom}%`;
+                iframe.style.minHeight = `${100 / winZoom}%`;
+                
+                iframe.style.transform = `scale(${winZoom})`;
+                iframe.style.transformOrigin = 'top left';
+            }
             
             wZoomDisplay.textContent = Math.round(winZoom * 100) + '%';
         }
@@ -341,25 +366,6 @@ document.addEventListener('DOMContentLoaded', () => {
             updateDockVisibility();
         });
 
-        let isMaximized = false;
-        let preMaxTargetX, preMaxTargetY;
-
-        // --- NEW: BLINK ENGINE OPEN PUBLISHER AUTO-MAXIMIZE HACK ---
-        const isFirefox = navigator.userAgent.toLowerCase().includes('firefox');
-        if (appName.trim() === "Open Publisher" && !isFirefox) {
-            // Force the window state to be maximized immediately to bypass Chrome rendering lag
-            isMaximized = true;
-            preMaxTargetX = targetLeft; // Store center screen coordinates so it un-maximizes properly
-            preMaxTargetY = targetTop;
-            
-            // Override the physics start values instantly
-            win.physics.x = targetLeft;
-            win.physics.y = targetTop;
-            win.physics.scale = 1;
-            
-            win.classList.add('maximized');
-        }
-
         maxBtn.addEventListener('click', () => {
             win.style.transition = 'transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1)';
             if (!isMaximized) {
@@ -370,8 +376,12 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 isMaximized = false;
                 win.classList.remove('maximized');
+                // Use fallback coordinates if the app opened already maximized
                 win.physics.targetX = preMaxTargetX;
                 win.physics.targetY = preMaxTargetY;
+                // Instantly snap physics variables so it doesn't fly in from the edge of the screen
+                win.physics.x = preMaxTargetX;
+                win.physics.y = preMaxTargetY;
             }
             setTimeout(() => { win.style.transition = 'none'; }, 300);
         });
@@ -431,7 +441,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 const card = btn.closest('.app-card');
                 if (card) { 
-                    // FIXED: trim() prevents invisible spaces from breaking conditions
                     appName = card.querySelector('.card-title').textContent.trim(); 
                     appIcon = card.getAttribute('data-icon');
                     cardRect = card.getBoundingClientRect();
@@ -443,7 +452,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     const heroTitle = document.querySelector('.hero-title');
                     const heroElement = document.querySelector('.hero-section');
                     if(heroTitle) {
-                        // FIXED: Trim removes the massive newlines generated by the <img> tag in the hero header
                         appName = heroTitle.textContent.trim(); 
                         appIcon = "https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/IHlwr0B.png";
                         cardRect = heroElement.getBoundingClientRect();
