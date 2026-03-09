@@ -1,6 +1,6 @@
 {
-  "name": "Your WebApps",
-  "short_name": "ywa.app",
+  "name": "ywa.app",
+  "short_name": "Your WebApps",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -15,7 +15,7 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#dcdbfa",
-  "background_color": "#d5daf7",
+  "theme_color": "#ca6438",
+  "background_color": "#ca6438",
   "display": "standalone"
 }
