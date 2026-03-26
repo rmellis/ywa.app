@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- LOGO REFERENCES ---
     const sidebarLogo = document.getElementById('sidebarLogo');
-    const LOGO_DARK = "https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/hUjqV40.png";
-    const LOGO_LIGHT = "https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/DP6sSZn.png";
+    const LOGO_DARK = "https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/Mmg2cdm.png";
+    const LOGO_LIGHT = "https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/Mmg2cdm.png";
 
     const windowContainer = document.getElementById('windowContainer');
     const windowTemplate = document.getElementById('windowTemplate');
@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- GLOBAL DASHBOARD ZOOM LOGIC ---
     let currentZoom = 1;
+    let userManuallyZoomed = false; 
 
     function applyZoom() {
         if(zoomWrapper) {
@@ -41,9 +42,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    if(zoomInBtn) { zoomInBtn.addEventListener('click', () => { if (currentZoom < 2.0) { currentZoom += 0.1; applyZoom(); } }); }
-    if(zoomOutBtn) { zoomOutBtn.addEventListener('click', () => { if (currentZoom > 0.5) { currentZoom -= 0.1; applyZoom(); } }); }
-    if(zoomLevelDisplay) { zoomLevelDisplay.addEventListener('click', () => { currentZoom = 1; applyZoom(); }); }
+    if(zoomInBtn) { zoomInBtn.addEventListener('click', () => { if (currentZoom < 2.0) { currentZoom += 0.1; userManuallyZoomed = true; applyZoom(); } }); }
+    if(zoomOutBtn) { zoomOutBtn.addEventListener('click', () => { if (currentZoom > 0.5) { currentZoom -= 0.1; userManuallyZoomed = true; applyZoom(); } }); }
+    if(zoomLevelDisplay) { zoomLevelDisplay.addEventListener('click', () => { currentZoom = 1; userManuallyZoomed = true; applyZoom(); }); }
+
+    // --- 3-TIER RESPONSIVE AUTO-ZOOM ---
+    function handleResponsiveZoom() {
+        if (userManuallyZoomed) return; 
+
+        let targetZoom = 1;
+
+        // 80% triggers when width drops to 1443px or below
+        if (window.innerWidth <= 1443) {
+            targetZoom = 0.8; 
+        } 
+        // 90% triggers when width is between 1444px and 1599px
+        else if (window.innerWidth <= 1599) {
+            targetZoom = 0.9; 
+        }
+        // 100% for anything 1600px+ wide
+
+        if (Math.abs(currentZoom - targetZoom) > 0.01) {
+            currentZoom = targetZoom;
+            applyZoom();
+        }
+    }
+
+    // Trigger immediately on load, and dynamically on window resize
+    window.addEventListener('resize', () => {
+        userManuallyZoomed = false; // Re-enable auto-zoom when the user resizes the window
+        handleResponsiveZoom();
+    });
+    handleResponsiveZoom();
 
     // --- THEME TOGGLE LOGIC ---
     const savedTheme = localStorage.getItem('ywa-theme');
@@ -51,10 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial Load Setup
     if (savedTheme === 'light') {
         body.classList.add('light-theme');
-        if(sidebarLogo) sidebarLogo.src = LOGO_LIGHT; // NEW: Set Light Logo on Load
+        if(sidebarLogo) sidebarLogo.src = LOGO_LIGHT;
         if(moonIcon && sunIcon) { moonIcon.classList.add('hidden'); sunIcon.classList.remove('hidden'); }
     } else {
-        if(sidebarLogo) sidebarLogo.src = LOGO_DARK; // NEW: Ensure Dark Logo is set explicitly
+        if(sidebarLogo) sidebarLogo.src = LOGO_DARK; 
     }
 
     if(themeToggleBtn) {
@@ -62,11 +92,11 @@ document.addEventListener('DOMContentLoaded', () => {
             body.classList.toggle('light-theme');
             if (body.classList.contains('light-theme')) {
                 localStorage.setItem('ywa-theme', 'light');
-                if(sidebarLogo) sidebarLogo.src = LOGO_LIGHT; // NEW: Switch to Light Logo
+                if(sidebarLogo) sidebarLogo.src = LOGO_LIGHT; 
                 moonIcon.classList.add('hidden'); sunIcon.classList.remove('hidden');
             } else {
                 localStorage.setItem('ywa-theme', 'dark');
-                if(sidebarLogo) sidebarLogo.src = LOGO_DARK; // NEW: Switch to Dark Logo
+                if(sidebarLogo) sidebarLogo.src = LOGO_DARK; 
                 moonIcon.classList.remove('hidden'); sunIcon.classList.add('hidden');
             }
         });
@@ -151,7 +181,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-
     // --- EXACT COMPIZ FUSION "JELLO" PHYSICS ENGINE ---
     const SPRING_STIFFNESS = 0.12; 
     const SPRING_DAMPING = 0.6;    
@@ -221,7 +250,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         loop();
     }
-
 
     // --- MULTI-WINDOW OS MANAGER ---
     function openAppWindow(appName, targetUrl, appIcon, cardRect) {
