@@ -549,7 +549,7 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
     .sidebar .brand {
         flex-direction: row !important; 
         margin-top: 0 !important;
-        margin-bottom: 16px !important; /* THE FIX: Pushes the nav buttons firmly down! */
+        margin-bottom: 16px !important; 
         padding: 0 !important;
         justify-content: center !important;
         align-items: center !important;
@@ -580,12 +580,12 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
         width: 100%;
         gap: 8px;
         padding-bottom: 5px;
-        -ms-overflow-style: none; /* Hide scrollbar IE/Edge */
-        scrollbar-width: none;    /* Hide scrollbar Firefox */
+        -ms-overflow-style: none; 
+        scrollbar-width: none;    
     }
     
     .side-nav::-webkit-scrollbar {
-        display: none; /* Hide scrollbar Chrome/Safari */
+        display: none; 
     }
 
     .nav-label { display: none !important; }
@@ -594,7 +594,7 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
         white-space: nowrap;
         padding: 8px 14px;
         font-size: 0.9rem;
-        flex-shrink: 0 !important; /* Stops the buttons from squashing into pills */
+        flex-shrink: 0 !important; 
     }
 
     .sidebar-footer { display: none !important; }
@@ -611,24 +611,27 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
     .top-controls {
         width: 100%;
         justify-content: space-between;
+        align-items: center;
         flex-wrap: wrap;
         gap: 10px;
+    }
+
+    /* BRING BACK ZOOM CONTROLS FOR MOBILE */
+    .zoom-controls {
+        display: flex !important;
+        order: 2; /* Keeps it neatly aligned next to the theme toggle */
     }
 
     /* FIX SEARCH BOX CORNERS AND SPACING */
     .search-container {
         width: 100% !important;
-        order: 3;
+        order: 3; /* Puts search bar underneath the buttons */
         border-radius: 20px !important; 
         margin-bottom: 4px !important; 
     }
     
     #searchInput {
         border-radius: 20px !important; 
-    }
-
-    .zoom-controls {
-        display: none !important;
     }
 
     /* Single Column Layout */
@@ -668,6 +671,11 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
     }
     
     .window-zoom-controls {
+        display: none !important;
+    }
+
+    /* HIDE COPY IFRAME BUTTON ON MOBILE */
+    .copy-embed-btn {
         display: none !important;
     }
 }
