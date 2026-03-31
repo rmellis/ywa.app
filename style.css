@@ -516,25 +516,28 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
         min-height: 100vh;
     }
 
-    /* 2. Transform Sidebar into horizontal top nav */
+    /* 2. Transform Sidebar into horizontal top nav (NO LONGER STICKY) */
     .sidebar {
         width: 100% !important;
         height: auto !important;
         flex-direction: column;
-        padding: 12px 15px;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
+        padding: 12px 10px;
+        position: relative !important; /* This allows you to scroll past it! */
+        top: auto !important;
         border-right: none;
         border-bottom: 1px solid var(--glass-border);
     }
 
-    /* 3. FIX SQUASHED APPS: Force main content to take full width */
+    /* 3. FIX SQUASHED APPS: Force main content to take full width with minimal padding */
     .main-content {
         width: 100% !important;
         margin-left: 0 !important;
-        padding: 15px !important;
+        padding: 0 !important; /* Removes massive desktop padding */
         overflow: visible !important;
+    }
+    
+    .content-padding {
+        padding: 12px !important; /* Lets the app cards stretch almost to the screen edges */
     }
 
     .sidebar .brand {
@@ -590,7 +593,7 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
         flex-direction: column;
         align-items: center;
         gap: 12px;
-        padding: 10px 0;
+        padding: 12px 12px 0 12px !important;
         height: auto !important;
     }
 
@@ -601,9 +604,15 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
         gap: 10px;
     }
 
+    /* 5. FIX SEARCH BOX CORNERS */
     .search-container {
         width: 100% !important;
         order: 3;
+        border-radius: 20px !important; /* Restores rounded corners */
+    }
+    
+    #searchInput {
+        border-radius: 20px !important; /* Restores rounded corners */
     }
 
     .zoom-controls {
@@ -628,7 +637,7 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
 
     .app-grid {
         grid-template-columns: 1fr !important;
-        gap: 20px;
+        gap: 16px;
         width: 100% !important;
     }
 
