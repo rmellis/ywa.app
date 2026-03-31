@@ -547,23 +547,24 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
         display: none !important;
     }
 
-    /* BULLETPROOF LOGO ALIGNMENT & SPACING */
+    /* BULLETPROOF LOGO ALIGNMENT & SQUASH PREVENTION */
     .sidebar .brand {
         flex-direction: row !important; 
+        flex-wrap: nowrap !important; /* Physically forbids wrapping */
         margin-top: 0 !important;
         margin-bottom: 16px !important; 
         padding: 0 !important;
         justify-content: center !important;
         align-items: center !important;
         gap: 12px !important; 
-        width: 100% !important;
+        width: auto !important;
     }
 
     .sidebar .brand-image {
         order: 1 !important; 
         height: 28px !important; 
         width: auto !important;
-        flex-shrink: 0 !important; /* Stops the logo from being squashed */
+        flex-shrink: 0 !important; 
     }
 
     .brand-text-container {
@@ -572,17 +573,16 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
         text-align: left !important;
         gap: 0px !important;
         flex-shrink: 0 !important;
+        min-width: max-content !important; /* Forces the box to be as wide as the text */
     }
 
     /* Forces text to stay on one line! */
-    .brand-title { 
-        font-size: 1.3rem !important; 
+    .brand-title, .brand-subtitle { 
         white-space: nowrap !important; 
+        display: block !important;
     }
-    .brand-subtitle { 
-        font-size: 0.75rem !important; 
-        white-space: nowrap !important; 
-    }
+    .brand-title { font-size: 1.3rem !important; }
+    .brand-subtitle { font-size: 0.75rem !important; }
 
     /* Make nav swipeable and STOP crushing items */
     .side-nav {
@@ -641,14 +641,14 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
         display: flex !important;
     }
 
-    /* 2. Search Box in the Middle (Stretches to fill empty space) */
+    /* 2. Search Box in the Middle */
     .search-container {
         order: 2 !important;
         width: auto !important; 
-        flex-grow: 1 !important; /* Stretches to fill the gap */
+        flex: 1 1 auto !important; /* Stretches to fill the gap, but allows shrinking */
+        min-width: 50px !important; /* Prevents it from disappearing entirely */
         border-radius: 20px !important; 
         margin-bottom: 0 !important; 
-        min-width: 100px !important; 
     }
     
     #searchInput {
@@ -657,29 +657,29 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
         min-width: 0; 
     }
 
-    /* 3. Zoom Controls on the Right (HYPER-SPECIFIC OVERRIDE) */
-    #zoomWrapper .topbar .top-controls .zoom-controls {
+    /* 3. Zoom Controls on the Right (NUCLEAR ID OVERRIDE) */
+    .zoom-controls {
         display: flex !important;
         order: 3 !important;
         flex-shrink: 0 !important;
         visibility: visible !important; 
         opacity: 1 !important;
         align-items: center !important;
-        width: auto !important;
-        height: auto !important;
-        overflow: visible !important;
-        pointer-events: auto !important;
+        gap: 4px !important;
     }
     
-    #zoomWrapper .topbar .top-controls .zoom-controls button, 
-    #zoomWrapper .topbar .top-controls .zoom-controls span {
+    /* We must target the exact IDs to beat any existing mobile-hide rules */
+    #zoomOutBtn, 
+    #zoomLevelDisplay, 
+    #zoomInBtn {
         display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
         visibility: visible !important;
         opacity: 1 !important;
         width: auto !important;
         height: auto !important;
+        pointer-events: auto !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 
     /* Single Column Layout */
