@@ -545,30 +545,32 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
         display: none !important;
     }
 
-    /* LOGO FIX: Swap order, shrink image, and align */
+    /* BULLETPROOF LOGO ALIGNMENT */
     .sidebar .brand {
-        flex-direction: row-reverse; /* Puts the image on the left of the text */
+        flex-direction: row !important; 
         margin-top: 0;
         margin-bottom: 10px;
         padding: 0;
         justify-content: center;
         align-items: center;
-        gap: 12px; /* Space between logo and text */
+        gap: 12px !important; 
     }
 
     .sidebar .brand-image {
-        height: 26px; /* Shrunk from 36px */
-        width: auto;
+        order: 1 !important; /* STRICTLY forces logo to the left */
+        height: 28px !important; /* Shrunk size */
+        width: auto !important;
     }
 
     .brand-text-container {
-        align-items: flex-start;
-        text-align: left;
-        gap: 0px;
+        order: 2 !important; /* STRICTLY forces text to the right */
+        align-items: flex-start !important;
+        text-align: left !important;
+        gap: 0px !important;
     }
 
-    .brand-title { font-size: 1.3rem; }
-    .brand-subtitle { font-size: 0.75rem; }
+    .brand-title { font-size: 1.3rem !important; }
+    .brand-subtitle { font-size: 0.75rem !important; }
 
     /* Make nav swipeable and STOP crushing items */
     .side-nav {
@@ -602,8 +604,8 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
         flex-direction: column;
         align-items: center;
         gap: 12px;
-        /* Fixed bottom padding so search box isn't against the border */
-        padding: 12px 12px 6px 12px !important; 
+        /* INCREASED bottom padding */
+        padding: 12px 12px 18px 12px !important; 
         height: auto !important;
     }
 
@@ -614,11 +616,12 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
         gap: 10px;
     }
 
-    /* FIX SEARCH BOX CORNERS */
+    /* FIX SEARCH BOX CORNERS AND SPACING */
     .search-container {
         width: 100% !important;
         order: 3;
         border-radius: 20px !important; 
+        margin-bottom: 4px !important; /* Bumps it off the bottom edge */
     }
     
     #searchInput {
