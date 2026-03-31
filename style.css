@@ -500,17 +500,26 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
    MOBILE RESPONSIVE LAYOUT (Screens under 850px)
    ========================================= */
 @media screen and (max-width: 850px) {
-    /* Stack the layout vertically */
+    /* 1. Fix the background cutting off while scrolling */
+    .mesh-background {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: -1;
+    }
+
     #zoomWrapper {
         flex-direction: column;
         height: auto;
         min-height: 100vh;
     }
 
-    /* Transform Sidebar into a horizontal swipeable top-bar */
+    /* 2. Transform Sidebar into horizontal top nav */
     .sidebar {
-        width: 100%;
-        height: auto;
+        width: 100% !important;
+        height: auto !important;
         flex-direction: column;
         padding: 12px 15px;
         position: sticky;
@@ -520,7 +529,14 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
         border-bottom: 1px solid var(--glass-border);
     }
 
-    /* Keep Brand/Logo together in a row */
+    /* 3. FIX SQUASHED APPS: Force main content to take full width */
+    .main-content {
+        width: 100% !important;
+        margin-left: 0 !important;
+        padding: 15px !important;
+        overflow: visible !important;
+    }
+
     .sidebar .brand {
         flex-direction: row;
         margin-top: 0;
@@ -542,7 +558,7 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
     .brand-title { font-size: 1.3rem; }
     .brand-subtitle { font-size: 0.75rem; }
 
-    /* Make navigation swipeable horizontally */
+    /* 4. Make nav swipeable and STOP crushing items */
     .side-nav {
         display: flex;
         flex-direction: row;
@@ -558,23 +574,24 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
         display: none; /* Hide scrollbar Chrome/Safari */
     }
 
-    .nav-label { display: none; } /* Hide category titles to save space */
+    .nav-label { display: none !important; }
     
     .nav-item {
         white-space: nowrap;
         padding: 8px 14px;
         font-size: 0.9rem;
+        flex-shrink: 0 !important; /* Stops the buttons from squashing into pills */
     }
 
-    /* Hide donation block on mobile to save space */
-    .sidebar-footer { display: none; }
+    .sidebar-footer { display: none !important; }
 
     /* Reformat Top Controls */
     .topbar {
         flex-direction: column;
         align-items: center;
         gap: 12px;
-        padding: 15px;
+        padding: 10px 0;
+        height: auto !important;
     }
 
     .top-controls {
@@ -585,15 +602,15 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
     }
 
     .search-container {
-        width: 100%;
-        order: 3; /* Drops the search bar below the toggle buttons */
+        width: 100% !important;
+        order: 3;
     }
 
     .zoom-controls {
-        display: none; /* Hide manual zoom controls on mobile (handled by CSS) */
+        display: none !important;
     }
 
-    /* Single Column Layout for Hero and Apps */
+    /* Single Column Layout */
     .hero-content {
         flex-direction: column;
     }
@@ -610,11 +627,12 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
     }
 
     .app-grid {
-        grid-template-columns: 1fr; /* Single Column Magic */
+        grid-template-columns: 1fr !important;
         gap: 20px;
+        width: 100% !important;
     }
 
-    /* Make OS Windows full screen on mobile */
+    /* Full screen OS Windows on mobile */
     .os-window {
         width: 100% !important;
         height: 100% !important;
@@ -628,7 +646,6 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
         border-radius: 0;
     }
     
-    /* Hide window resize/zoom controls on mobile since it's full screen */
     .window-zoom-controls {
         display: none !important;
     }
