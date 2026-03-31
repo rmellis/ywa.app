@@ -599,7 +599,9 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
 
     .sidebar-footer { display: none !important; }
 
-    /* Reformat Top Controls */
+    /* =========================================
+       PERFECT SINGLE-LINE TOP BAR
+       ========================================= */
     .topbar {
         flex-direction: column;
         align-items: center;
@@ -610,28 +612,42 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
 
     .top-controls {
         width: 100%;
+        display: flex !important;
+        flex-direction: row !important; /* Force a horizontal line */
+        flex-wrap: nowrap !important;   /* STOP items from wrapping to a new line */
         justify-content: space-between;
         align-items: center;
-        flex-wrap: wrap;
-        gap: 10px;
+        gap: 10px !important;
     }
 
-    /* BRING BACK ZOOM CONTROLS FOR MOBILE */
-    .zoom-controls {
-        display: flex !important;
-        order: 2; /* Keeps it neatly aligned next to the theme toggle */
+    /* 1. Theme Button on the Left */
+    .theme-btn {
+        order: 1 !important;
+        flex-shrink: 0 !important;
     }
 
-    /* FIX SEARCH BOX CORNERS AND SPACING */
+    /* 2. Search Box in the Middle (Stretches to fill empty space) */
     .search-container {
-        width: 100% !important;
-        order: 3; /* Puts search bar underneath the buttons */
+        order: 2 !important;
+        width: auto !important; /* Removes the 100% width limitation */
+        flex-grow: 1 !important; /* Instructs it to fill all remaining horizontal space */
         border-radius: 20px !important; 
-        margin-bottom: 4px !important; 
+        margin-bottom: 0 !important; /* Removes the bottom margin since it's inline now */
     }
     
     #searchInput {
         border-radius: 20px !important; 
+        width: 100% !important;
+        min-width: 0; /* Prevents the text input from breaking out of its container on tiny phones */
+    }
+
+    /* 3. Zoom Controls on the Right */
+    .zoom-controls {
+        display: flex !important;
+        order: 3 !important;
+        flex-shrink: 0 !important;
+        visibility: visible !important; /* Hard override to ensure they show */
+        opacity: 1 !important;
     }
 
     /* Single Column Layout */
