@@ -574,7 +574,7 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
         flex-shrink: 0 !important;
     }
 
-    /* THE FIX FOR THE SQUASHED TITLE: Forces text to stay on one line! */
+    /* Forces text to stay on one line! */
     .brand-title { 
         font-size: 1.3rem !important; 
         white-space: nowrap !important; 
@@ -657,25 +657,29 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
         min-width: 0; 
     }
 
-    /* 3. Zoom Controls on the Right */
-    .zoom-controls {
+    /* 3. Zoom Controls on the Right (HYPER-SPECIFIC OVERRIDE) */
+    #zoomWrapper .topbar .top-controls .zoom-controls {
         display: flex !important;
         order: 3 !important;
         flex-shrink: 0 !important;
         visibility: visible !important; 
         opacity: 1 !important;
         align-items: center !important;
+        width: auto !important;
+        height: auto !important;
+        overflow: visible !important;
+        pointer-events: auto !important;
     }
     
-    /* Hard override to prevent original CSS from hiding the specific IDs */
-    .zoom-controls button, 
-    .zoom-controls span,
-    #zoomInBtn, 
-    #zoomOutBtn, 
-    #zoomLevelDisplay {
-        display: inline-flex !important;
+    #zoomWrapper .topbar .top-controls .zoom-controls button, 
+    #zoomWrapper .topbar .top-controls .zoom-controls span {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         visibility: visible !important;
         opacity: 1 !important;
+        width: auto !important;
+        height: auto !important;
     }
 
     /* Single Column Layout */
