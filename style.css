@@ -500,7 +500,7 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
    MOBILE RESPONSIVE LAYOUT (Screens under 850px)
    ========================================= */
 @media screen and (max-width: 850px) {
-    /* 1. Fix the background cutting off while scrolling */
+    /* Fix the background cutting off while scrolling */
     .mesh-background {
         position: fixed !important;
         top: 0 !important;
@@ -516,52 +516,61 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
         min-height: 100vh;
     }
 
-    /* 2. Transform Sidebar into horizontal top nav (NO LONGER STICKY) */
+    /* Transform Sidebar into horizontal top nav */
     .sidebar {
         width: 100% !important;
         height: auto !important;
         flex-direction: column;
         padding: 12px 10px;
-        position: relative !important; /* This allows you to scroll past it! */
+        position: relative !important; 
         top: auto !important;
         border-right: none;
         border-bottom: 1px solid var(--glass-border);
     }
 
-    /* 3. FIX SQUASHED APPS: Force main content to take full width with minimal padding */
+    /* Force main content to take full width with minimal padding */
     .main-content {
         width: 100% !important;
         margin-left: 0 !important;
-        padding: 0 !important; /* Removes massive desktop padding */
+        padding: 0 !important; 
         overflow: visible !important;
     }
     
     .content-padding {
-        padding: 12px !important; /* Lets the app cards stretch almost to the screen edges */
+        padding: 12px !important; 
     }
 
+    /* Hide Featured Project / Hero Section on mobile */
+    .hero-section {
+        display: none !important;
+    }
+
+    /* LOGO FIX: Swap order, shrink image, and align */
     .sidebar .brand {
-        flex-direction: row;
+        flex-direction: row-reverse; /* Puts the image on the left of the text */
         margin-top: 0;
         margin-bottom: 10px;
         padding: 0;
         justify-content: center;
+        align-items: center;
+        gap: 12px; /* Space between logo and text */
     }
 
     .sidebar .brand-image {
-        height: 36px;
+        height: 26px; /* Shrunk from 36px */
         width: auto;
     }
 
     .brand-text-container {
         align-items: flex-start;
         text-align: left;
+        gap: 0px;
     }
 
     .brand-title { font-size: 1.3rem; }
     .brand-subtitle { font-size: 0.75rem; }
 
-    /* 4. Make nav swipeable and STOP crushing items */
+    /* Make nav swipeable and STOP crushing items */
     .side-nav {
         display: flex;
         flex-direction: row;
@@ -593,7 +602,8 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
         flex-direction: column;
         align-items: center;
         gap: 12px;
-        padding: 12px 12px 0 12px !important;
+        /* Fixed bottom padding so search box isn't against the border */
+        padding: 12px 12px 6px 12px !important; 
         height: auto !important;
     }
 
@@ -604,15 +614,15 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
         gap: 10px;
     }
 
-    /* 5. FIX SEARCH BOX CORNERS */
+    /* FIX SEARCH BOX CORNERS */
     .search-container {
         width: 100% !important;
         order: 3;
-        border-radius: 20px !important; /* Restores rounded corners */
+        border-radius: 20px !important; 
     }
     
     #searchInput {
-        border-radius: 20px !important; /* Restores rounded corners */
+        border-radius: 20px !important; 
     }
 
     .zoom-controls {
