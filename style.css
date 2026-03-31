@@ -496,219 +496,130 @@ body.light-theme .hero-inline-snippet { background: rgba(255,255,255,0.4); }
 
 .dock-dot { position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--text-main); border-radius: 50%; opacity: 0.6; transition: bottom 0.2s; pointer-events: none; }
 .dock-item-wrapper:hover .dock-dot { bottom: -8px; }
+
 /* =========================================
    MOBILE RESPONSIVE LAYOUT (Screens under 850px)
    ========================================= */
 @media screen and (max-width: 850px) {
-    /* Fix the background cutting off while scrolling */
-    .mesh-background {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        z-index: -1;
-    }
+    /* 1. KILL HORIZONTAL SCROLL / PURPLE GAP */
+    html, body { overflow-x: hidden !important; width: 100% !important; }
+    
+    .mesh-background { position: fixed !important; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; }
+    #zoomWrapper { flex-direction: column; min-height: 100vh; }
 
-    #zoomWrapper {
-        flex-direction: column;
-        height: auto;
-        min-height: 100vh;
-    }
-
-    /* Transform Sidebar into horizontal top nav */
+    /* 2. SIDEBAR TO TOP NAV */
     .sidebar {
-        width: 100% !important;
-        height: auto !important;
-        flex-direction: column;
-        padding: 12px 10px;
-        position: relative !important; 
-        top: auto !important;
-        border-right: none;
+        width: 100% !important; height: auto; position: relative !important;
+        flex-direction: column; padding: 15px 10px; border-right: none;
         border-bottom: 1px solid var(--glass-border);
     }
 
-    /* Force main content to take full width with minimal padding */
-    .main-content {
-        width: 100% !important;
-        margin-left: 0 !important;
-        padding: 0 !important; 
-        overflow: visible !important;
-        box-sizing: border-box !important;
-    }
-    
-    .content-padding {
-        padding: 12px !important; 
-        box-sizing: border-box !important;
-    }
-
-    /* Hide Featured Project and Long Description on mobile to save screen real estate */
-    .hero-section, .topbar-intro {
-        display: none !important;
-    }
-
-    /* BULLETPROOF LOGO ALIGNMENT & SQUASH PREVENTION */
+    /* 3. RESTORE LOGO FIXES */
     .sidebar .brand {
-        flex-direction: row !important; 
-        flex-wrap: nowrap !important; /* Physically forbids wrapping */
-        margin-top: 0 !important;
-        margin-bottom: 16px !important; 
-        padding: 0 !important;
+        flex-direction: row-reverse !important; /* Image on left, text on right */
         justify-content: center !important;
         align-items: center !important;
-        gap: 12px !important; 
-        width: auto !important;
+        margin: 0 auto 15px auto !important;
+        gap: 12px !important;
     }
+    .sidebar .brand-image { height: 28px !important; width: auto !important; }
+    .brand-text-container { text-align: left !important; gap: 2px !important; }
+    .brand-title { font-size: 1.3rem !important; white-space: nowrap !important; margin: 0 !important; }
+    .brand-subtitle { font-size: 0.75rem !important; white-space: nowrap !important; margin: 0 !important; }
 
-    .sidebar .brand-image {
-        order: 1 !important; 
-        height: 28px !important; 
-        width: auto !important;
-        flex-shrink: 0 !important; 
+    /* 4. SWIPEABLE NAV */
+    .side-nav { 
+        display: flex !important;
+        flex-direction: row !important; 
+        flex-wrap: nowrap !important; 
+        width: 100% !important; 
+        overflow-x: auto !important; 
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch !important; 
+        gap: 8px; 
+        padding-bottom: 5px; 
+        scrollbar-width: none; 
     }
-
-    .brand-text-container {
-        order: 2 !important; 
-        align-items: flex-start !important;
-        text-align: left !important;
-        gap: 0px !important;
-        flex-shrink: 0 !important;
-        min-width: max-content !important; /* Forces the box to be as wide as the text */
-    }
-
-    /* Forces text to stay on one line! */
-    .brand-title, .brand-subtitle { 
-        white-space: nowrap !important; 
-        display: block !important;
-    }
-    .brand-title { font-size: 1.3rem !important; }
-    .brand-subtitle { font-size: 0.75rem !important; }
-
-    /* Make nav swipeable and STOP crushing items */
-    .side-nav {
-        display: flex;
-        flex-direction: row;
-        overflow-x: auto;
-        width: 100%;
-        gap: 8px;
-        padding-bottom: 5px;
-        -ms-overflow-style: none; 
-        scrollbar-width: none;    
-    }
+    .side-nav::-webkit-scrollbar { display: none; }
     
-    .side-nav::-webkit-scrollbar {
-        display: none; 
-    }
-
     .nav-label { display: none !important; }
     
-    .nav-item {
-        white-space: nowrap;
-        padding: 8px 14px;
-        font-size: 0.9rem;
+    .nav-item { 
+        white-space: nowrap !important; 
         flex-shrink: 0 !important; 
+        padding: 8px 14px; 
     }
-
     .sidebar-footer { display: none !important; }
 
-    /* =========================================
-       PERFECT SINGLE-LINE TOP BAR
-       ========================================= */
-    .topbar {
-        width: 100% !important;
-        box-sizing: border-box !important;
-        flex-direction: column;
-        align-items: center;
-        gap: 12px;
-        padding: 12px 12px 18px 12px !important; 
-        height: auto !important;
+    /* MAIN CONTENT */
+    .main-content { margin-left: 0 !important; width: 100% !important; padding: 0 !important; }
+    .content-padding { padding: 15px !important; width: 100% !important; box-sizing: border-box; }
+    
+    /* Hide the hero section, but keep the topbar intro (greeting) visible */
+    .hero-section { display: none !important; }
+    
+    /* Display the greeting text nicely on mobile */
+    .topbar-intro { 
+        display: flex !important; 
+        max-width: 100% !important; 
+        margin-bottom: 5px !important; 
+        text-align: center; 
+    }
+    
+    /* Adjust the greeting font size and remove the upward shift so it aligns well */
+    #greeting { 
+        font-size: 0.85rem !important; 
+        transform: none !important; 
     }
 
+    /* 5. TOPBAR & CONTROLS (Strict Single Line) */
+    .topbar { flex-direction: column; padding: 10px 15px 20px 15px !important; height: auto !important; gap: 15px; }
     .top-controls {
-        width: 100%;
         display: flex !important;
-        flex-direction: row !important; 
-        flex-wrap: nowrap !important;   /* Stops items from wrapping to a new line */
-        justify-content: space-between;
-        align-items: center;
-        gap: 10px !important;
-    }
-
-    /* 1. Theme Button on the Left */
-    .theme-btn {
-        order: 1 !important;
-        flex-shrink: 0 !important;
-        display: flex !important;
-    }
-
-    /* 2. Search Box in the Middle */
-    .search-container {
-        order: 2 !important;
-        width: auto !important; 
-        flex: 1 1 auto !important; /* Stretches to fill the gap, but allows shrinking */
-        min-width: 50px !important; /* Prevents it from disappearing entirely */
-        border-radius: 20px !important; 
-        margin-bottom: 0 !important; 
-    }
-    
-    #searchInput {
-        border-radius: 20px !important; 
+        flex-direction: row !important;
+        flex-wrap: nowrap !important; 
         width: 100% !important;
-        min-width: 0; 
-    }
-
-    /* 3. Zoom Controls on the Right (NUCLEAR ID OVERRIDE) */
-    .zoom-controls {
-        display: flex !important;
-        order: 3 !important;
-        flex-shrink: 0 !important;
-        visibility: visible !important; 
-        opacity: 1 !important;
         align-items: center !important;
-        gap: 4px !important;
+        gap: 8px !important;
     }
+    .theme-btn { order: 1 !important; flex-shrink: 0 !important; margin: 0 !important; }
+    .search-container { 
+        order: 2 !important; 
+        flex-grow: 1 !important; 
+        min-width: 0 !important; 
+        border-radius: 20px !important;
+        margin: 0 !important;
+    }
+    #searchInput { border-radius: 20px !important; width: 100% !important; }
     
-    /* We must target the exact IDs to beat any existing mobile-hide rules */
-    #zoomOutBtn, 
-    #zoomLevelDisplay, 
-    #zoomInBtn {
-        display: flex !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        width: auto !important;
-        height: auto !important;
-        pointer-events: auto !important;
-        align-items: center !important;
-        justify-content: center !important;
+    /* 6. RESTORE DASHBOARD ZOOM BUTTONS */
+    .zoom-controls { 
+        display: flex !important; 
+        order: 3 !important; 
+        flex-shrink: 0 !important; 
+        margin: 0 !important;
     }
 
-    /* Single Column Layout */
-    .app-grid {
-        grid-template-columns: 1fr !important;
-        gap: 16px;
-        width: 100% !important;
+    /* 7. APP GRID & TITLE TRUNCATION */
+    .app-grid { grid-template-columns: 1fr !important; gap: 16px; }
+
+    .card-header { flex-wrap: nowrap !important; gap: 10px; }
+    .card-header > div:first-child { 
+        min-width: 0 !important; 
+        flex-grow: 1; 
+    }
+    .card-title { 
+        white-space: nowrap !important; 
+        overflow: hidden !important; 
+        text-overflow: ellipsis !important; 
+        display: block !important; 
     }
 
-    /* Full screen OS Windows on mobile */
-    .os-window {
-        width: 100% !important;
-        height: 100% !important;
-        top: 0 !important;
-        left: 0 !important;
-        transform: none !important;
-        border-radius: 0;
-    }
-
-    .macos-header {
-        border-radius: 0;
-    }
+    /* OS WINDOW MOBILE FULLSCREEN */
+    .os-window { width: 100% !important; height: 100% !important; top: 0 !important; left: 0 !important; transform: none !important; border-radius: 0; }
+    .macos-header { border-radius: 0; padding: 0 10px; }
+    .copy-embed-btn { display: none !important; }
     
-    .window-zoom-controls {
-        display: none !important;
-    }
-
-    /* HIDE COPY IFRAME BUTTON ON MOBILE */
-    .copy-embed-btn {
-        display: none !important;
-    }
+    /* Keep App Window zoom controls visible */
+    .window-zoom-controls { display: flex !important; }
 }
